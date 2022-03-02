@@ -1,14 +1,14 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-
-const connectDatabase = ()=>{
-    mongoose.connect(process.env.DB_URI,{
-        useNewUrlParser:true,useUnifiedTopology:true})
-    .then((data=>{
-    console.log(`Mongodb connected with server :${data.connection.host}`)
-    })).catch((err)=>{
-        console.log(err)
+const connectDatabase = () => {
+  mongoose
+    .connect(process.env.DB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     })
-}
-
-module.exports = connectDatabase
+    .then((data) => {
+      console.log(`Mongodb connected with server :${data.connection.host}`);
+    });
+};
+//catch clause is not added to handle unhandled promise rejection error
+module.exports = connectDatabase;
