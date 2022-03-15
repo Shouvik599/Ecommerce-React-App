@@ -30,6 +30,7 @@ import {ReactNavbar} from "overlay-navbar"
   link2Margin:"1vmax",
   link3Margin:"1vmax",
   link4Margin:"2vamx",
+  profileIconUrl: '/login',
   profileIconColor:"rgba(35,35,35,0.8)",
   searchIconColor:"rgba(35,35,35,0.8)",
   cartIconColor:"rgba(35,35,35,0.8)",
