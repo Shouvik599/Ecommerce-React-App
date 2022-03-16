@@ -12,17 +12,17 @@ import Search from "./component/Product/Search";
 import LoginSignUp from "./component/User/LoginSignUp";
 import store from "./store";
 import { loadUser } from "./actions/userAction";
-import UserOptions from "./component/layout/Header/UserOptions.js"
-import Profile from "./component/User/Profile.js"
+import UserOptions from "./component/layout/Header/UserOptions.js";
+import Profile from "./component/User/Profile.js";
 import ProtectedRoute from "./component/Route/ProtectedRoute";
-import UpdateProfile from "./component/User/UpdateProfile.js"
-import UpdatePassword from "./component/User/UpdatePassword.js"
-import ForgotPassword from "./component/User/ForgotPassword.js"
-
+import UpdateProfile from "./component/User/UpdateProfile.js";
+import UpdatePassword from "./component/User/UpdatePassword.js";
+import ForgotPassword from "./component/User/ForgotPassword.js";
+import Cart from './component/Cart/Cart';
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  console.log(isAuthenticated," ",user)
-  
+  console.log(isAuthenticated, " ", user);
+
   useEffect(() => {
     WebFont.load({
       google: {
@@ -35,20 +35,24 @@ function App() {
   return (
     <Router>
       <Header />
-      {isAuthenticated && <UserOptions user={user}/>}
+      {isAuthenticated && <UserOptions user={user} />}
 
-      
-        <Route exact path="/" component={Home} />
-        <Route exact path="/product/:id" component={ProductDetails} />
-        <Route exact path="/products" component={Products} />
-        <Route path="/products/:keyword" component={Products} />
-        <Route exact path="/Search" component={Search} />
-        <ProtectedRoute exact path="/account" component={Profile}/>
-        <Route exact path="/login" component={LoginSignUp} />
-        <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
-        <ProtectedRoute exact path="/password/update" component={UpdatePassword} />
-        <Route exact path="/password/forgot" component={ForgotPassword} />
-      
+      <Route exact path="/" component={Home} />
+      <Route exact path="/product/:id" component={ProductDetails} />
+      <Route exact path="/products" component={Products} />
+      <Route path="/products/:keyword" component={Products} />
+      <Route exact path="/Search" component={Search} />
+      <ProtectedRoute exact path="/account" component={Profile} />
+      <Route exact path="/login" component={LoginSignUp} />
+      <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
+      <ProtectedRoute
+        exact
+        path="/password/update"
+        component={UpdatePassword}
+      />
+      <Route exact path="/password/forgot" component={ForgotPassword} />
+      <Route exact path="/cart" component={Cart} />
+
       <Footer />
     </Router>
   );
