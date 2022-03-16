@@ -1,9 +1,8 @@
 import React, { Fragment, useState } from "react";
 import MetaData from "../layout/MetaData";
-import { useHistory } from "react-router-dom";
 import "./Search.css";
 const Search = ({history}) => {
-  history = useHistory();
+  
   const [keyword, setKeyword] = useState("");
 
   const searchSubmitHandler = (e) => {

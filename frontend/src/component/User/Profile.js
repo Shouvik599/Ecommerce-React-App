@@ -4,11 +4,10 @@ import MetaData from '../layout/MetaData'
 import { useSelector } from 'react-redux'
 import Loader from '../layout/Loader/Loader'
 import { Link } from 'react-router-dom'
-import { useHistory } from "react-router-dom";
 import "./Profile.css";
-const Profile = () => {
+const Profile = ({history}) => {
     const { user,loading,isAuthenticated }=useSelector(state=>state.user)
-    const history = useHistory();
+    
     useEffect(()=>{
         if(isAuthenticated===false)
         {
