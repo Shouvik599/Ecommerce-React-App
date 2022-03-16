@@ -1,17 +1,17 @@
 import React, { Fragment, useRef, useState, useEffect } from "react";
 import "./LoginSignUp.css";
 import Loader from "../layout/Loader/Loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../actions/userAction";
 import { useAlert } from "react-alert";
-
-const LoginSignUp = ({ navigate, location }) => {
+import pic from "../../images/Profile.png"
+const LoginSignUp = ({ history, location }) => {
   location = window.location;
-  navigate = useNavigate();
+  history = useHistory();
   const dispatch = useDispatch();
   const alert = useAlert();
 
@@ -34,8 +34,8 @@ const LoginSignUp = ({ navigate, location }) => {
 
   const { name, email, password } = user;
 
-  const [avatar, setAvatar] = useState("/Profile.png");
-  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  const [avatar, setAvatar] = useState(pic);
+  const [avatarPreview, setAvatarPreview] = useState(pic);
 
   const loginSubmit = (e) => {
     e.preventDefault();
@@ -80,9 +80,9 @@ const LoginSignUp = ({ navigate, location }) => {
     }
 
     if (isAuthenticated) {
-      navigate(redirect);
+      history.push(redirect);
     }
-  }, [dispatch, error, alert, navigate, isAuthenticated, redirect]);
+  }, [dispatch, error, alert, history, isAuthenticated, redirect]);
 
   const switchTabs = (e, tab) => {
     if (tab === "login") {

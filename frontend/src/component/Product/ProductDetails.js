@@ -3,14 +3,13 @@ import Carousel from "react-material-ui-carousel"
 import "./ProductDetails.css"
 import {useSelector,useDispatch} from "react-redux"
 import { clearErrors, getProductDetails } from '../../actions/productAction'
-import { useParams } from 'react-router-dom'
 import ReactStars from 'react-rating-stars-component'
 import ReviewCard from "./ReviewCard.js"
 import Loader from '../layout/Loader/Loader'
 import {useAlert} from "react-alert"
-const ProductDetails = () => {
+const ProductDetails = ({match}) => {
     
-    const {id}=useParams();
+    
     const dispatch = useDispatch();
     const alert = useAlert();
     const {product,loading,error} = useSelector((state)=>state.productDetails);
@@ -20,9 +19,9 @@ const ProductDetails = () => {
             alert.error(error);
             dispatch(clearErrors());
         }
-      dispatch(getProductDetails(id))
+      dispatch(getProductDetails(match.params.id))
       
-    }, [dispatch,id,error,alert]);
+    }, [dispatch,match.params.id,error,alert]);
     const options = {
         edit:false,
         color:"rgba(20,20,20,0.1)",

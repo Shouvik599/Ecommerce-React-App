@@ -21,7 +21,7 @@ const reducer = combineReducers({
   allUsers: allUsersReducer,
   userDetails: userDetailsReducer,
 });
-
+console.log(reducer.user)
 let initialState = {};
 const middleware = [thunk];
 

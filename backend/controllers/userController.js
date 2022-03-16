@@ -19,7 +19,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     password,
     avatar: {
       public_id: myCloud.public_id,
-      url:  myCloud.secure_url,
+      url: myCloud.secure_url,
     },
   });
 
@@ -36,12 +36,12 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({ email }).select("+password");
 
   if (!user) {
-    return next(ErrorHandler("Invalid email/password combination", 401));
+    return next(new ErrorHandler("Invalid email/password combination", 401));
   }
 
-  const isPasswordMatched = user.comparePassword(password);
+  const isPasswordMatched = await user.comparePassword(password);
   if (!isPasswordMatched) {
-    return next(ErrorHandler("Invalid email/password combination", 401));
+    return next(new ErrorHandler("Invalid email/password combination", 401));
   }
 
   sendToken(user, 200, res);
@@ -147,11 +147,11 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
   const isMatched = user.comparePassword(req.body.oldPassword);
   if (!isMatched) {
-    return next(ErrorHandler("Old password is incorrect", 400));
+    return next(new ErrorHandler("Old password is incorrect", 400));
   }
 
   if (req.body.oldPassword !== req.body.confirmedPassword) {
-    return next(ErrorHandler("Password does not match", 400));
+    return next(new ErrorHandler("Password does not match", 400));
   }
 
   user.password = req.body.newPassword;
