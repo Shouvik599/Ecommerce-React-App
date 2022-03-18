@@ -8,6 +8,7 @@ import ReviewCard from "./ReviewCard.js";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import { addItemsToCart } from "../../actions/cartActions";
+import MetaData from '../layout/MetaData'
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -48,6 +49,7 @@ const ProductDetails = ({ match }) => {
   };
   return (
     <Fragment>
+      <MetaData title={product.name}/>
       {loading ? (
         <Loader />
       ) : (

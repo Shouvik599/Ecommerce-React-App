@@ -2,7 +2,7 @@ import "./App.css";
 import Header from "./component/layout/Header/Header.js";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import WebFont from "webfontloader";
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useSelector } from "react-redux";
 import Footer from "./component/layout/Footer/Footer.js";
 import Home from "./component/Home/Home.js";
@@ -19,10 +19,26 @@ import UpdateProfile from "./component/User/UpdateProfile.js";
 import UpdatePassword from "./component/User/UpdatePassword.js";
 import ForgotPassword from "./component/User/ForgotPassword.js";
 import Cart from './component/Cart/Cart';
+import Shipping from "./component/Cart/Shipping.js"
+import ConfirmOrder from "./component/Cart/ConfirmOrder.js"
+import Payment from "./component/Cart/Payment.js"
+import axios from "axios";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import OrderSuccess from "./component/Cart/OrderSucces.js"
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   console.log(isAuthenticated, " ", user);
+  // const [stripeApiKey, setStripeApiKey] = useState("");
 
+  // async function getStripeApiKey() {
+  //   const { data } = await axios.get("/api/v1/stripeapikey");
+
+  //   setStripeApiKey(data.stripeApiKey);
+  //   console.log(data.setStripeApiKey);
+  // }
+  const stripeApiKey = "pk_test_51KeMPVSCGvfstJuYoKR5HOH2ODRGEmLTLKzrvqPlcstFxr0mCKVNf7qdWwn3OOBKLSRgb1WWFs5zE7JPYjPsnPjK00BQNXXomj";
   useEffect(() => {
     WebFont.load({
       google: {
@@ -30,6 +46,7 @@ function App() {
       },
     });
     store.dispatch(loadUser());
+    // getStripeApiKey();
   }, []);
 
   return (
@@ -52,6 +69,11 @@ function App() {
       />
       <Route exact path="/password/forgot" component={ForgotPassword} />
       <Route exact path="/cart" component={Cart} />
+      <ProtectedRoute exact path="/shipping" component={Shipping}/>
+      <ProtectedRoute exact path="/order/confirm" component={ConfirmOrder}/>
+      
+      <Elements stripe={loadStripe(stripeApiKey)}><ProtectedRoute exact path="/process/payment" component={Payment}/></Elements>
+      <ProtectedRoute exact path="/success" component={OrderSuccess} />
 
       <Footer />
     </Router>

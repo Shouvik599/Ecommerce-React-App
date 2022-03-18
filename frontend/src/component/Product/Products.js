@@ -59,6 +59,7 @@ const Products=({match}) => {
 
   return (
     <Fragment>
+      <MetaData title="Products"/>
       {loading ? (
         <Loader />
       ) : (

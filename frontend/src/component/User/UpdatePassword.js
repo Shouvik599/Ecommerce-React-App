@@ -36,8 +36,6 @@ const UpdatePassword = ({history}) => {
   };
 
 
-
-
   useEffect(() => {
       
     if (error) {
