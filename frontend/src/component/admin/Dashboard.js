@@ -19,6 +19,8 @@ import {
     ArcElement
   } from 'chart.js'
 import MetaData from "../layout/MetaData";
+import { getAllOrders } from "../../actions/orderAction.js";
+import { getAllUsers } from "../../actions/userAction.js";
 
 const Dashboard = () => {
     ChartJS.register(
@@ -33,6 +35,8 @@ const Dashboard = () => {
       )
       const dispatch = useDispatch();
       const { products } = useSelector((state) => state.products);
+      const { orders } = useSelector((state) => state.allOrders);
+      const { users } = useSelector((state) => state.allUsers);
       let outOfStock = 0;
 
       products &&
@@ -41,8 +45,15 @@ const Dashboard = () => {
         outOfStock += 1;
       }
     });
+    let totalAmount = 0;
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
     useEffect(() => {
         dispatch(getAdminProduct());
+        dispatch(getAllOrders());
+        dispatch(getAllUsers());
       }, [dispatch]);
 
     const lineState = {
@@ -52,7 +63,7 @@ const Dashboard = () => {
             label: "TOTAL AMOUNT",
             backgroundColor: ["tomato"],
             hoverBackgroundColor: ["rgb(197, 72, 49)"],
-            data: [0, 4000],
+            data: [0, totalAmount],
           },
         ],
       };
@@ -78,7 +89,7 @@ const Dashboard = () => {
         <div className="dashboardSummary">
         <div>
             <p>
-              Total Amount <br /> ₹2000
+              Total Amount <br /> ₹{totalAmount}
             </p>
           </div>
           <div className="dashboardSummaryBox2">
@@ -88,11 +99,11 @@ const Dashboard = () => {
             </Link>
             <Link to="/admin/orders">
               <p>Orders</p>
-              <p>4</p>
+              <p>{orders && orders.length}</p>
             </Link>
             <Link to="/admin/users">
               <p>Users</p>
-              <p>2</p>
+              <p>{users && users.length}</p>
             </Link>
           </div>
         </div>

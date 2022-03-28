@@ -18,3 +18,7 @@ input[type="number"]{
   .redColor {
     color: red !important;
   }
+
+  body {
+      cursor:url("./images/cursor.png"),auto;
+  }

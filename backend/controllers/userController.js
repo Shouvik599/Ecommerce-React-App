@@ -195,10 +195,10 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 //get all users for admin
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
-  const user = await User.find();
+  const users = await User.find();
   res.status(200).json({
     success: true,
-    user,
+    users,
   });
 });
 
@@ -246,10 +246,12 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
       new ErrorHandler(`User with Id: ${req.parama.id} does not exist`)
     );
   }
+  const imageId = user.avatar.public_id;
 
+  await cloudinary.v2.uploader.destroy(imageId);
   await user.remove();
 
-  //we will remove cloudinary later
+ 
   res.status(200).json({
     success: true,
     message: "User deleted successfully",

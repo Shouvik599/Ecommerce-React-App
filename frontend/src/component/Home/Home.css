@@ -1,13 +1,16 @@
-.banner{
-    background-image:linear-gradient(to right,#635dc0,#3027ae);
+.banner {
+    background-image: url("https://cdn.wallpaperhub.app/cloudcache/f/6/6/7/9/7/f6679718eff1a6e9f6a0434e30478f00e7764c5f.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     height: 100vmin;
-    text-align: center;
     display: flex;
     flex-direction: column;
+    text-align: center;
     align-items: center;
     justify-content: center;
-    color: aliceblue;
-}
+    color: white;
+  }
 .banner > h1{
     margin: 5vmax;
     font: 600 2.5vmax;

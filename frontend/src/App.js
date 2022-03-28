@@ -37,6 +37,9 @@ import ProcessOrder from "./component/admin/ProcessOrder";
 import UsersList from "./component/admin/UsersList";
 import UpdateUser from "./component/admin/UpdateUser";
 import ProductReviews from "./component/admin/ProductReviews";
+import About from "./component/layout/About/About";
+import Contact from "./component/layout/Contact/Contact.js";
+
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   console.log(isAuthenticated, " ", user);
@@ -67,6 +70,8 @@ function App() {
 
       <Route exact path="/" component={Home} />
       <Route exact path="/product/:id" component={ProductDetails} />
+      <Route exact path="/about" component={About} />
+      <Route exact path="/contact" component={Contact} />
       <Route exact path="/products" component={Products} />
       <Route path="/products/:keyword" component={Products} />
       <Route exact path="/Search" component={Search} />
@@ -127,26 +132,27 @@ function App() {
         isAdmin={true}
         component={ProcessOrder}
       />
-      <ProtectedRoute
+       <ProtectedRoute
         exact
         path="/admin/users"
         isAdmin={true}
         component={UsersList}
       />
-
+    
       <ProtectedRoute
         exact
         path="/admin/user/:id"
         isAdmin={true}
         component={UpdateUser}
       />
-
+ 
       <ProtectedRoute
         exact
         path="/admin/reviews"
         isAdmin={true}
-        component={ProductReviews}
-      />
+        component={ProductReviews} 
+       /> 
+    
 
       <Footer />
     </Router>
