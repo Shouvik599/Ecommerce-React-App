@@ -15,18 +15,22 @@ import {
   DELETE_PRODUCT_FAIL,
   CLEAR_ERRORS,
   PRODUCT_DETAILS_REQUEST,
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_SUCCESS,
+  UPDATE_PRODUCT_FAIL,
+  UPDATE_PRODUCT_RESET,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
   NEW_REVIEW_REQUEST,
   NEW_REVIEW_SUCCESS,
   NEW_REVIEW_RESET,
-  NEW_REVIEW_FAIL
+  NEW_REVIEW_FAIL,
 } from "../constants/productConstants";
 
 export const productsReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case ALL_PRODUCT_REQUEST:
-      case ADMIN_PRODUCT_REQUEST:
+    case ADMIN_PRODUCT_REQUEST:
       return {
         loading: true,
         products: [],
@@ -38,13 +42,13 @@ export const productsReducer = (state = { products: [] }, action) => {
         productsCount: action.payload.productsCount,
         resultPerPage: action.payload.resultPerPage,
       };
-      case ADMIN_PRODUCT_SUCCESS:
+    case ADMIN_PRODUCT_SUCCESS:
       return {
         loading: false,
         products: action.payload,
       };
     case ALL_PRODUCT_FAIL:
-      case ADMIN_PRODUCT_FAIL:
+    case ADMIN_PRODUCT_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -96,6 +100,7 @@ export const newProductReducer = (state = { product: {} }, action) => {
 export const productReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_PRODUCT_REQUEST:
+    case UPDATE_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
@@ -106,8 +111,14 @@ export const productReducer = (state = {}, action) => {
         loading: false,
         isDeleted: action.payload,
       };
-
+    case UPDATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
     case DELETE_PRODUCT_FAIL:
+    case UPDATE_PRODUCT_FAIL:
       return {
         ...state,
         loading: false,
@@ -118,6 +129,11 @@ export const productReducer = (state = {}, action) => {
         ...state,
         isDeleted: false,
       };
+    case UPDATE_PRODUCT_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,
@@ -127,7 +143,6 @@ export const productReducer = (state = {}, action) => {
       return state;
   }
 };
-
 
 export const productDetailsReducer = (state = { product: {} }, action) => {
   switch (action.type) {
@@ -154,7 +169,6 @@ export const productDetailsReducer = (state = { product: {} }, action) => {
     default:
       return state;
   }
-
 };
 
 export const newReviewReducer = (state = {}, action) => {
