@@ -15,14 +15,18 @@ import {
   DELETE_PRODUCT_REQUEST,
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAIL,
+  UPDATE_PRODUCT_REQUEST,
+  UPDATE_PRODUCT_SUCCESS,
+  UPDATE_PRODUCT_FAIL,
+  UPDATE_PRODUCT_RESET,
   NEW_PRODUCT_FAIL,
   NEW_REVIEW_REQUEST,
   NEW_REVIEW_SUCCESS,
-  NEW_REVIEW_FAIL
+  NEW_REVIEW_FAIL,
 } from "../constants/productConstants";
 
 export const getProduct =
-  (keyword = "", currentPage = 1, price = [0, 25000], category,ratings=0) =>
+  (keyword = "", currentPage = 1, price = [0, 25000], category, ratings = 0) =>
   async (dispatch) => {
     try {
       dispatch({
@@ -45,7 +49,7 @@ export const getProduct =
     }
   };
 
-  // Get All Products For Admin
+// Get All Products For Admin
 export const getAdminProduct = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
@@ -90,6 +94,32 @@ export const createProduct = (productData) => async (dispatch) => {
     });
   }
 };
+//Update product
+export const updateProduct = (id, productData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_PRODUCT_REQUEST });
+
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+
+    const { data } = await axios.put(
+      `/api/v1/admin/product/${id}`,
+      productData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PRODUCT_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 // Delete Product
 export const deleteProduct = (id) => async (dispatch) => {
@@ -123,6 +153,7 @@ export const getProductDetails = (id) => async (dispatch) => {
       type: PRODUCT_DETAILS_REQUEST,
     });
     const { data } = await axios.get(`/api/v1/product/${id}`);
+    console.log("Product details front---", data.product);
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
       payload: data.product,
@@ -133,7 +164,6 @@ export const getProductDetails = (id) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-  
 };
 
 // NEW REVIEW
